@@ -1097,14 +1097,37 @@ def progressbar(total, pos, msg=""):
     progress_stream.write(fmt % (pos, total, bar, msg))
 
 def get_media(url, options):
-    sites = [Aftonbladet(), Dr(), Expressen(), Hbo(), Justin(), Kanal5(), Kanal9(),
-             Nrk(), Qbrick(), Ruv(), Sr(), Svtplay(), Tv4play(), Urplay(), Viaplay()]
-    stream = None
-    for i in sites:
-        if i.handle(url):
-            stream = i
-            break
-    if not stream:
+    sites = { 'twitch.tv' : Justin,
+              'justin.tv' : Justin,
+              'hbo.com' : Hbo,
+              'sverigesradio.se' : Sr,
+              'urplay.se' : Urplay,
+              'dn.se' : Qbrick,
+              'di.se' : Qbrick,
+              'svd.se' : Qbrick,
+              'kanal5play.se' : Kanal5,
+              'kanal9play.se' : Kanal9,
+              'kanal5.se' : Kanal9,
+              'expressen.se' : Expressen,
+              'aftonbladet.se' : Aftonbladet,
+              'tv3play.se' : Viaplay,
+              'tv6play.se' : Viaplay,
+              'tv8play.se' : Viaplay,
+              'tv4play.se' : Tv4play,
+              'tv4.se' : Tv4play,
+              'svtplay.se' : Svtplay,
+              'svt.se' : Svtplay,
+              'nrk.no' : Nrk,
+              'dr.dk' : Dr,
+              'ruv.is' : Ruv
+    }
+    host = urlparse(url).netloc
+    if host[:4] == 'www.':
+        host = host[4:]
+
+    try:
+        site = sites[host]()
+    except KeyError:
         log.error("That site is not supported. Make a ticket or send a message")
         sys.exit(2)
 
@@ -1125,7 +1148,7 @@ def get_media(url, options):
                 else:
                     options.output = unicode(re.sub('[-\s]+', '-', title))
 
-    stream.get(options, url)
+    site.get(options, url)
 
 def setup_log(silent):
     if silent:
