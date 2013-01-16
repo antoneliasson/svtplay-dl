@@ -543,9 +543,6 @@ def select_quality(options, streams):
     return selected
 
 class Justin():
-    def handle(self, url):
-        return ("twitch.tv" in url) or ("justin.tv" in url)
-
     def get(self, options, url):
         parse = urlparse(url)
         match = re.search("/b/(\d+)", parse.path)
@@ -592,9 +589,6 @@ class Justin():
                 download_rtmp(options, test["url"])
 
 class Hbo():
-    def handle(self, url):
-        return "hbo.com" in url
-
     def get(self, url):
         parse = urlparse(url)
         try:
@@ -629,9 +623,6 @@ class Hbo():
         download_rtmp(options, test["path"])
 
 class Sr():
-    def handle(self, url):
-        return "sverigesradio.se" in url
-
     def get(self, options, url):
         data = get_http_data(url)
         parse = urlparse(url)
@@ -651,9 +642,6 @@ class Sr():
         download_http(options, url)
 
 class Urplay():
-    def handle(self, url):
-        return "urplay.se" in url
-
     def get(self, options, url):
         data = get_http_data(url)
         match = re.search('file=(.*)\&plugins', data)
@@ -663,9 +651,6 @@ class Urplay():
             download_rtmp(options, "rtmp://streaming.ur.se/")
 
 class Qbrick():
-    def handle(self, url):
-        return ("dn.se" in url) or ("di.se" in url) or ("svd.se" in url)
-
     def get(self, options, url):
         if re.findall("dn.se", url):
             data = get_http_data(url)
@@ -727,9 +712,6 @@ class Qbrick():
         download_rtmp(options, server)
 
 class Kanal5():
-    def handle(self, url):
-        return "kanal5play.se" in url
-
     def get(self, options, url):
         match = re.search(".*video/([0-9]+)", url)
         if not match:
@@ -755,9 +737,6 @@ class Kanal5():
         download_rtmp(options, steambaseurl)
 
 class Kanal9():
-    def handle(self, url):
-        return ("kanal9play.se" in url) or ("kanal5.se" in url)
-
     def get(self, options, url):
         data = get_http_data(url)
         match = re.search("@videoPlayer\" value=\"(.*)\"", data)
@@ -797,9 +776,6 @@ class Kanal9():
         download_rtmp(options, match.group(1))
 
 class Expressen():
-    def handle(self, url):
-        return "expressen.se" in url
-
     def get(self, options, url):
         parse = urlparse(url)
         match = re.search("/(.*[\/\+].*)/", unquote_plus(parse.path))
@@ -831,9 +807,6 @@ class Expressen():
         download_rtmp(options, filename)
 
 class Aftonbladet():
-    def handle(self, url):
-        return "aftonbladet.se" in url
-
     def get(self, options, url, start):
         parse = urlparse(url)
         data = get_http_data(url)
@@ -866,9 +839,6 @@ class Aftonbladet():
             download_http(options, filename)
 
 class Viaplay():
-    def handle(self, url):
-        return ("tv3play.se" in url) or ("tv6play.se" in url) or ("tv8play.se" in url)
-
     def get(self, options, url):
         parse = urlparse(url)
         match = re.search('\/play\/(.*)/?', parse.path)
@@ -890,9 +860,6 @@ class Viaplay():
         download_rtmp(options, filename)
 
 class Tv4play():
-    def handle(self, url):
-        return ("tv4play.se" in url) or ("tv4.se" in url)
-
     def get(self, options, url):
         parse = urlparse(url)
         if "tv4play.se" in url:
@@ -949,9 +916,6 @@ class Tv4play():
             download_hds(options, manifest, swf)
 
 class Svtplay():
-    def handle(self, url):
-        return ("svtplay.se" in url) or ("svt.se" in url)
-
     def get(self, options, url):
         if re.findall("svt.se", url):
             data = get_http_data(url)
@@ -1012,9 +976,6 @@ class Svtplay():
             download_http(options, test["url"])
 
 class Nrk(object):
-    def handle(self, url):
-        return "nrk.no" in url
-
     def get(self, options, url):
         data = get_http_data(url)
         match = re.search(r'data-media="(.*manifest.f4m)"', data)
@@ -1027,9 +988,6 @@ class Nrk(object):
             download_hds(options, manifest_url)
 
 class Dr(object):
-    def handle(self, url):
-        return "dr.dk" in url
-
     def get(self, options, url):
         data = get_http_data(url)
         match = re.search(r'resource:[ ]*"([^"]*)",', data)
@@ -1048,9 +1006,6 @@ class Dr(object):
         download_rtmp(options, uri)
 
 class Ruv(object):
-    def handle(self, url):
-        return "ruv.is" in url
-
     def get(self, options, url):
         data = get_http_data(url)
         match = re.search(r'(http://load.cache.is/vodruv.*)"', data)
